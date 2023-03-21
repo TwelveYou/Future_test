@@ -1,6 +1,6 @@
 import React from 'react';
 import Book from './Book';
-import list_of_book from './listOfObjects'
+import list_of_book from './data/listOfObjects'
 
 export default class ListOfBooks extends React.Component{
       

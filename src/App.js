@@ -1,6 +1,5 @@
-// import logo from './logo.svg';
 import './App.css';
-import './modules/Book'
+import './modules/Book';
 import Header from './modules/Header';
 import ListOfBooks from './modules/ListOfBooks';
 
