@@ -12,9 +12,15 @@ function sendRequest(){
     {
         if ((request.readyState === 4) && (request.status === 200)) 
         {
-            // let answer_script = document.getElementById('answer_AJAX_script');
-            // answer_script.innerHTML = request.responseText;
-            console.log(request.responseText);
+            let response = JSON.parse(request.responseText);
+            
+            console.log(response.items[0]);
+            console.log(response.items[0].volumeInfo.authors.join(', '));
+            console.log(response.items[0].volumeInfo.categories[0]);
+            console.log(response.items[0].volumeInfo.title);
+            console.log(response.items[0].volumeInfo.imageLinks.thumbnail);
+
+            return  response.items;
         }
     });
     request.send();

@@ -1,7 +1,7 @@
 import React from 'react';
 import keyForApi from './data/keyForApi';
 
-import GetBooks from './GetBooks';
+// import GetBooks from './GetBooks';
 
 // https://www.googleapis.com/books/v1/volumes?q=flowers+inauthor:keyes&key=yourAPIKey
 
@@ -13,7 +13,7 @@ export default class Header extends React.Component{
   render(){
     return (
         <header>
-            <GetBooks/>
+            {/* <GetBooks/> */}
 
             <div className="header__content_center">
                 <h1 className="header__title">Поиск книги</h1>
