@@ -7,6 +7,7 @@ import AboutSearching from './modules/AboutSearching';
 import ButtonAddBooks from './modules/ButtonAddBooks';
 
 import keyForApi from './modules/data/keyForApi';
+import ShowFullBook from './modules/ShowFullBook';
 
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
   const [items, setItems] = useState(0);
   const [category, setCategory] = useState('all');
   const [order, setOrder] = useState('relevance');
+  const [openBook, setOpenBook] = useState(null);
 
   function getBooks(searchVal){
     if (searchVal === ''){
@@ -42,6 +44,7 @@ function App() {
           {
               let response = JSON.parse(request.responseText);
               setItems(response.totalItems);
+              console.log(response.items[0]);
               return  setBooks(response.items);
           }
       });
@@ -80,16 +83,31 @@ function App() {
       console.log('Еще нет книг');
     }
   }
+
+  let content;
+  if(openBook === null){
+    content = <ShowFullBook books={openBook} openBook={openBook}/>;
+  } else{
+    content = <div>не выбрана книга</div>;
+  }
+
   
   return (
     <div className="App">
       <Header getBooks={getBooks} setCategory={setCategory} setOrder={setOrder} category={category}></Header>
       <AboutSearching items={items} books={books}/>
-      <ListOfBooks books={books}></ListOfBooks>
+      {content}
+      <ListOfBooks books={books} setOpenBook={setOpenBook}></ListOfBooks>
       <ButtonAddBooks addBooks={addBooks}/>
-      {/* <button onClick={addBooks}>Загрузить еще 30 книг</button> */}
     </div>
   );
 }
 
 export default App;
+
+
+      // <Header getBooks={getBooks} setCategory={setCategory} setOrder={setOrder} category={category}></Header>
+      // <AboutSearching items={items} books={books}/>
+      // <ShowFullBook books={books} openBook={openBook}/>
+      // <ListOfBooks books={books} setOpenBook={setOpenBook}></ListOfBooks>
+      // <ButtonAddBooks addBooks={addBooks}/>

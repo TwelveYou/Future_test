@@ -8,8 +8,8 @@ export default class Book extends React.Component{
     }
 
     return (
-      <div className="book">
-        <img className="book__cover" src={this.props.url} alt={'Отсутствует изображение'} title={this.props.title} />
+      <div className="book" onClick={()=>(this.props.setOpenBook(this.props.book))}>
+        <img className="book__cover" src={this.props.url} alt={'Обложка отсутствует'} title={this.props.title} />
         <div className="book__info">
           <h3 className="book__info-title">{this.props.title}</h3>
           <p className="book__info-category">{this.props.category}</p>

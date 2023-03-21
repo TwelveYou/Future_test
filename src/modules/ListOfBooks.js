@@ -32,6 +32,8 @@ export default class ListOfBooks extends React.Component{
           category={book.volumeInfo.categories} 
           authors={book.volumeInfo.authors} 
           url={this.getSafeUrlImg(book)}
+          setOpenBook={this.props.setOpenBook}
+          book={book}
         />))} 
       </div>;
     }
