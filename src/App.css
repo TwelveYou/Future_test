@@ -3,14 +3,18 @@
 }
 
 header{
-  background-color: blueviolet;
+  background-color: rgb(165, 231, 231);
   margin-bottom: 5px;
   padding-bottom: 20px;
 }
 
-.header__content_center{
+.header__content_center, .info-about-searching{
   max-width: 920px;
   margin: 0 auto;
+}
+
+.info-about-searching{
+  text-align: center
 }
 
 .list{
@@ -26,6 +30,13 @@ header{
   height: 390px;
   width: 230px;
   margin: 0 20px 20px 20px;
+  transition: background-color 0.8s;
+}
+
+.book:hover{
+  background-color: rgb(165, 231, 231);
+  transition: background-color 0.8s;
+  cursor: pointer;
 }
 
 .book__cover{
@@ -59,4 +70,16 @@ header{
   overflow: hidden;
   text-overflow: ellipsis;
   max-height: 42px;
+}
+
+/* .button-add{
+  /* display: flex; */
+  /* margin: auto; */
+  
+/* } */
+
+.button-add > button{
+  margin: 0 auto;
+  display: block;
+  margin-bottom: 10px;
 }

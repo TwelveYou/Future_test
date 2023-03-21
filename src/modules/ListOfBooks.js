@@ -17,22 +17,21 @@ export default class ListOfBooks extends React.Component{
   render(){
     let list;
 
-    if(this.props.books === 0){
+    if(this.props.books === null){
       list = <h3> Введите название книги </h3>;
     }
-    else  if(this.props.books === undefined){
-      list = <h3> Что-то пошло не так и мы не смогли загрузить эти книги. </h3>;
-    }
+    // else  
+    // if(this.props.books === undefined){
+    //   list = <h3> Что-то пошло не так и мы не смогли загрузить эти книги. </h3>;
+    // }
     else{
-      // this.props.books.map((book)=>(console.log(book)));
-      list = <div className="list"> {this.props.books.map((book)=>(
+      list = <div className="list"> {this.props.books.map((book, index)=>(
         <Book 
-          key={'ID'+book.id}
+          key={'ID'+book.id+'-'+index}
           title={book.volumeInfo.title  } 
           category={book.volumeInfo.categories} 
           authors={book.volumeInfo.authors} 
           url={this.getSafeUrlImg(book)}
-          // url={book.volumeInfo.imageLinks.thumbnail}
         />))} 
       </div>;
     }

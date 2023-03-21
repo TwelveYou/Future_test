@@ -10,23 +10,12 @@ export default class Header extends React.Component{
 
     changeSelectOrder(event) {
         this.props.setOrder(event.target.value);
-        console.log(event.target.value);
+        // console.log(event.target.value);
     }
     changeSelectCategory(event) {
-        console.log(event.target.value);
+        // console.log(event.target.value);
         this.props.setCategory(event.target.value);
     }
-
-    // startSearch(e){
-    //     const enter = e.currentTarget;
-    //     console.log(enter);
-    //     console.log(enter.keyCode);
-    //     if (enter === 'enter') {
-    //         this.props.getBooks(document.getElementById("search-string").value)
-    //     }        
-    // }
-
-
 
   render(){
     return (
@@ -34,10 +23,8 @@ export default class Header extends React.Component{
 
             <div className="header__content_center">
                 <h1 className="header__title">Поиск книги</h1>
-                {/* <form className="header__form" action={url_get} method="get"> */}
                     <div className='className="header__form-search'>
                         <input type="text" id="search-string" size="100"/>
-                        {/* <input type="text" id="search-string" size="100" onKeyUp={this.startSearch}/> */}
                         <button onClick={()=>(this.props.getBooks(document.getElementById("search-string").value))}>Поиск</button>
                     </div>
 
