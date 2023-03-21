@@ -3,7 +3,7 @@ import './modules/Book';
 
 import React, { useState } from 'react';
 import Header from './modules/Header';
-// import ListOfBooks from './modules/ListOfBooks';
+import ListOfBooks from './modules/ListOfBooks';
 import AboutSearching from './modules/AboutSearching';
 import ButtonAddBooks from './modules/ButtonAddBooks';
 import ShowFullBook from './modules/ShowFullBook';
@@ -11,7 +11,6 @@ import Loader from './modules/Loader';
 
 import keyForApi from './modules/data/keyForApi';
 
-const ListOfBooks = React.lazy(() => import('./modules/ListOfBooks'));
 
 function App() {
   const [books, setBooks] = useState(null);
@@ -24,13 +23,22 @@ function App() {
   function getBooks(searchVal){
     if (searchVal === ''){
       searchVal = 'flowers';
-      console.log('Поле поиска не может быть пустым');
 
       document.getElementById('search-string').placeholder = 'Вы не ввели текст';
       document.getElementById('search-string').style = 'color:red; border-color: red;';
+
+      setBooks(null);
     } else{
       document.getElementById('search-string').placeholder = '';
       document.getElementById('search-string').style = '';
+
+      if(document.getElementById('button-add__button') !== null){
+        document.getElementById('button-add__button').textContent = "Загрузить еще 30 книг";
+        document.getElementById('button-add__button').style.backgroundColor = '';
+        document.getElementById('button-add__button').style.color = '';
+        document.getElementById('button-add__button').disabled = '';
+      }
+
 
       var request = new XMLHttpRequest();
       let subject;
@@ -53,11 +61,11 @@ function App() {
           }
       });
 
-      request.onloadstart = (event) => { 
+      request.onloadstart = () => { 
         document.getElementById('loader').style.visibility = 'visible';
       }
 
-      request.onload = (event) => { 
+      request.onload = () => { 
         document.getElementById('loader').style.visibility = 'hidden';
       };
         
@@ -85,15 +93,21 @@ function App() {
               let response = JSON.parse(request.responseText);
               if(response.hasOwnProperty('items')){
                 return  setBooks([...books, ...response.items]);
+              } else
+              if(response.items === undefined){
+                document.getElementById('button-add__button').textContent = "Больше нет книг по вашему запросу";
+                document.getElementById('button-add__button').style.backgroundColor = 'red';
+                document.getElementById('button-add__button').style.color = 'white';
+                document.getElementById('button-add__button').disabled = 'disabled';
               }
           }
       });
 
-      request.onloadstart = (event) => { 
+      request.onloadstart = () => { 
         document.getElementById('loader').style.visibility = 'visible';
       }
 
-      request.onload = (event) => { 
+      request.onload = () => { 
         document.getElementById('loader').style.visibility = 'hidden';
       };
 
@@ -103,6 +117,12 @@ function App() {
     }
   }
 
+  let buttonAdd = '';
+  if(books !== null){
+      buttonAdd = <ButtonAddBooks addBooks={addBooks}/>;
+    
+  }
+
   let content;
   if(openBook !== null){
     content = <ShowFullBook book={openBook} openBook={openBook} setOpenBook={setOpenBook}/>;
@@ -110,7 +130,7 @@ function App() {
     content = <div>
       <AboutSearching items={items} books={books}/>
       <ListOfBooks books={books} setOpenBook={setOpenBook}></ListOfBooks>
-      <ButtonAddBooks addBooks={addBooks}/>
+      {buttonAdd}
     </div>;
   }
 
