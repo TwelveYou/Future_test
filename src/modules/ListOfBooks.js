@@ -20,7 +20,10 @@ export default class ListOfBooks extends React.Component{
     if(this.props.books === 0){
       list = <h3> Введите название книги </h3>;
     }
-    else {
+    else  if(this.props.books === undefined){
+      list = <h3> Что-то пошло не так и мы не смогли загрузить эти книги. </h3>;
+    }
+    else{
       // this.props.books.map((book)=>(console.log(book)));
       list = <div className="list"> {this.props.books.map((book)=>(
         <Book 
