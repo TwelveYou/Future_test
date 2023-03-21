@@ -1,5 +1,5 @@
 import React from 'react';
-import keyForApi from './data/keyForApi';
+import keyForApi from './keyForApi';
 
 // let books = '';
 
