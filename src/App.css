@@ -85,9 +85,18 @@ header{
   margin-bottom: 10px;
 }
 
+.show-one-book{
+  margin: 0 auto;
+  max-width: 75%;
+}
+
 .one-book__cover{
   float:left;
   margin: 0 20px 20px 0;
+}
+
+.one-book__cover{
+  border: black 1px solid;
 }
 
 .one-book__info-label{
