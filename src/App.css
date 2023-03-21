@@ -23,8 +23,8 @@ header{
 
 .book{
   background-color: gainsboro;
-  height: 430px;
-  width: 260px;
+  height: 390px;
+  width: 230px;
   margin: 0 20px 20px 20px;
 }
 
@@ -36,6 +36,27 @@ header{
   margin: 0 auto;  
 }
 
+.book__info-category{
+  font-size: 12px;
+}
+
 .book__info{
   padding: 0px 30px;
+
+  max-height: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+.book__info > h3{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: 75px;
+}
+
+.book__info > p{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: 42px;
 }

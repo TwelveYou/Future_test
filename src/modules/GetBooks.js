@@ -14,11 +14,11 @@ function sendRequest(){
         {
             let response = JSON.parse(request.responseText);
             
-            console.log(response.items[0]);
-            console.log(response.items[0].volumeInfo.authors.join(', '));
-            console.log(response.items[0].volumeInfo.categories[0]);
-            console.log(response.items[0].volumeInfo.title);
-            console.log(response.items[0].volumeInfo.imageLinks.thumbnail);
+            // console.log(response.items[0]);
+            // console.log(response.items[0].volumeInfo.authors.join(', '));
+            // console.log(response.items[0].volumeInfo.categories[0]);
+            // console.log(response.items[0].volumeInfo.title);
+            // console.log(response.items[0].volumeInfo.imageLinks.thumbnail);
 
             return  response.items;
         }
