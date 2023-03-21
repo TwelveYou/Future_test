@@ -16,6 +16,7 @@ function App() {
   const [category, setCategory] = useState('all');
   const [order, setOrder] = useState('relevance');
   const [openBook, setOpenBook] = useState(null);
+  const [textRequest, setTextRequest] = useState('');
 
   function getBooks(searchVal){
     if (searchVal === ''){
@@ -61,8 +62,7 @@ function App() {
     }
 
     if(books !== null){
-      console.log(books.length);
-
+      // console.log(books.length);
       var request = new XMLHttpRequest();
       let ajax_get_query = "https://www.googleapis.com/books/v1/volumes?q="+searchVal+subject+"&maxResults=30&startIndex="+books.length+"&orderBy="+order+"&key="+keyForApi;
       request.open('GET',ajax_get_query,true);
@@ -72,8 +72,6 @@ function App() {
           {
               let response = JSON.parse(request.responseText);
               if(response.hasOwnProperty('items')){
-                console.log(response.items);
-                console.log(books);
                 return  setBooks([...books, ...response.items]);
               }
           }
@@ -85,29 +83,23 @@ function App() {
   }
 
   let content;
-  if(openBook === null){
-    content = <ShowFullBook books={openBook} openBook={openBook}/>;
+  if(openBook !== null){
+    content = <ShowFullBook book={openBook} openBook={openBook} setOpenBook={setOpenBook}/>;
   } else{
-    content = <div>не выбрана книга</div>;
+    content = <div>
+      <Header textRequest={textRequest} setTextRequest={setTextRequest} getBooks={getBooks} setCategory={setCategory} setOrder={setOrder} category={category}></Header>
+      <AboutSearching items={items} books={books}/>
+      <ListOfBooks books={books} setOpenBook={setOpenBook}></ListOfBooks>
+      <ButtonAddBooks addBooks={addBooks}/>
+    </div>;
   }
 
   
   return (
     <div className="App">
-      <Header getBooks={getBooks} setCategory={setCategory} setOrder={setOrder} category={category}></Header>
-      <AboutSearching items={items} books={books}/>
       {content}
-      <ListOfBooks books={books} setOpenBook={setOpenBook}></ListOfBooks>
-      <ButtonAddBooks addBooks={addBooks}/>
     </div>
   );
 }
 
 export default App;
-
-
-      // <Header getBooks={getBooks} setCategory={setCategory} setOrder={setOrder} category={category}></Header>
-      // <AboutSearching items={items} books={books}/>
-      // <ShowFullBook books={books} openBook={openBook}/>
-      // <ListOfBooks books={books} setOpenBook={setOpenBook}></ListOfBooks>
-      // <ButtonAddBooks addBooks={addBooks}/>
