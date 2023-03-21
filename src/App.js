@@ -1,14 +1,17 @@
 import './App.css';
 import './modules/Book';
+
 import React, { useState } from 'react';
 import Header from './modules/Header';
-import ListOfBooks from './modules/ListOfBooks';
+// import ListOfBooks from './modules/ListOfBooks';
 import AboutSearching from './modules/AboutSearching';
 import ButtonAddBooks from './modules/ButtonAddBooks';
+import ShowFullBook from './modules/ShowFullBook';
+import Loader from './modules/Loader';
 
 import keyForApi from './modules/data/keyForApi';
-import ShowFullBook from './modules/ShowFullBook';
 
+const ListOfBooks = React.lazy(() => import('./modules/ListOfBooks'));
 
 function App() {
   const [books, setBooks] = useState(null);
@@ -45,10 +48,19 @@ function App() {
           {
               let response = JSON.parse(request.responseText);
               setItems(response.totalItems);
-              console.log(response.items[0]);
+              setOpenBook(null);
               return  setBooks(response.items);
           }
       });
+
+      request.onloadstart = (event) => { 
+        document.getElementById('loader').style.visibility = 'visible';
+      }
+
+      request.onload = (event) => { 
+        document.getElementById('loader').style.visibility = 'hidden';
+      };
+        
       request.send();  
     }
   }
@@ -76,6 +88,15 @@ function App() {
               }
           }
       });
+
+      request.onloadstart = (event) => { 
+        document.getElementById('loader').style.visibility = 'visible';
+      }
+
+      request.onload = (event) => { 
+        document.getElementById('loader').style.visibility = 'hidden';
+      };
+
       request.send();
     } else {
       console.log('Еще нет книг');
@@ -87,7 +108,6 @@ function App() {
     content = <ShowFullBook book={openBook} openBook={openBook} setOpenBook={setOpenBook}/>;
   } else{
     content = <div>
-      <Header textRequest={textRequest} setTextRequest={setTextRequest} getBooks={getBooks} setCategory={setCategory} setOrder={setOrder} category={category}></Header>
       <AboutSearching items={items} books={books}/>
       <ListOfBooks books={books} setOpenBook={setOpenBook}></ListOfBooks>
       <ButtonAddBooks addBooks={addBooks}/>
@@ -97,6 +117,8 @@ function App() {
   
   return (
     <div className="App">
+      <Loader/>
+      <Header textRequest={textRequest} setTextRequest={setTextRequest} getBooks={getBooks} setCategory={setCategory} setOrder={setOrder} category={category}></Header>
       {content}
     </div>
   );
