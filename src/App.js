@@ -12,11 +12,11 @@ function App() {
   const [page, setPage] = useState(0);
   const [sumPages, setSumPages] = useState(new Array(0));
 
-  // const [category, setCategory] = useState('all');
-  // const [order, setOrder] = useState('relevance ');
+  const [category, setCategory] = useState('all');
+  const [order, setOrder] = useState('relevance');
 
   function changeSelect(event) {
-    console.log(event.target.value);
+    // console.log(event.target.value);
     setPage(event.target.value);
     updateBooks(event.target.value);
   }
@@ -26,9 +26,17 @@ function App() {
     if (searchVal === 0){
       searchVal = '';
     }
+
+    let subject;
+    if (category === 'all'){
+      subject = ''
+    } else {
+      subject = '+subject:' + category;
+    }
+
     var request = new XMLHttpRequest();
-    let ajax_get_query = "https://www.googleapis.com/books/v1/volumes?q="+searchVal+"&maxResults=30&startIndex="+currentPage*30+"&key="+keyForApi;
-    // let ajax_get_query = "https://www.googleapis.com/books/v1/volumes?q="+searchVal+":+subject:"+category+"&maxResults=30&startIndex="+currentPage*30+"&orderBy="+order+"&key="+keyForApi;
+    // let ajax_get_query = "https://www.googleapis.com/books/v1/volumes?q="+searchVal+"&maxResults=30&startIndex="+currentPage*30+"&key="+keyForApi;
+    let ajax_get_query = "https://www.googleapis.com/books/v1/volumes?q="+searchVal+subject+"&maxResults=30&startIndex="+currentPage*30+"&orderBy="+order+"&key="+keyForApi;
     request.open('GET',ajax_get_query,true);
     request.addEventListener('readystatechange', function() 
     {
@@ -48,7 +56,16 @@ function App() {
     }
     var request = new XMLHttpRequest();
     // &maxResults=30
-    let ajax_get_query = "https://www.googleapis.com/books/v1/volumes?q="+searchVal+"&maxResults=30&startIndex=0&key="+keyForApi;
+    // let ajax_get_query = "https://www.googleapis.com/books/v1/volumes?q="+searchVal+"&maxResults=30&startIndex=0&key="+keyForApi;
+    let subject;
+    if (category === 'all'){
+      subject = ''
+    } else {
+      subject = '+subject:' + category;
+    }
+
+    let ajax_get_query = "https://www.googleapis.com/books/v1/volumes?q="+searchVal+subject+"&maxResults=30&startIndex=0&orderBy="+order+"&key="+keyForApi;
+    console.log(ajax_get_query);
     request.open('GET',ajax_get_query,true);
     request.addEventListener('readystatechange', function() 
     {
@@ -76,7 +93,7 @@ function App() {
   
   return (
     <div className="App">
-      <Header getBooks={getBooks}></Header>
+      <Header getBooks={getBooks} setCategory={setCategory} setOrder={setOrder}></Header>
       <div style={{marginBottom: 10}}>
         <p>
           Найденное количество книг по вашему запросу: {items}
@@ -85,7 +102,7 @@ function App() {
           всего страниц {sumPages.length} 
           <select id='selected-page' onChange={changeSelect}>
             {sumPages.map((name,index)=>(
-              <option value={index}> {name} </option>
+              <option value={index} key={'page'+index}> {name} </option>
             ))}
           </select>
           показано с {currentBooks()[0]} по {currentBooks()[1]}

@@ -3,17 +3,30 @@ import React from 'react';
 export default class Header extends React.Component{
     constructor(props) {
         super(props);
-        this.startSearch = this.startSearch.bind(this);
+        // this.startSearch = this.startSearch.bind(this);
+        this.changeSelectOrder = this.changeSelectOrder.bind(this);
+        this.changeSelectCategory = this.changeSelectCategory.bind(this);
     }
 
-    startSearch(e){
-        const enter = e.currentTarget;
-        console.log(enter);
-        console.log(enter.keyCode);
-        if (enter === 'enter') {
-            this.props.getBooks(document.getElementById("search-string").value)
-        }        
+    changeSelectOrder(event) {
+        this.props.setOrder(event.target.value);
+        console.log(event.target.value);
     }
+    changeSelectCategory(event) {
+        console.log(event.target.value);
+        this.props.setCategory(event.target.value);
+    }
+
+    // startSearch(e){
+    //     const enter = e.currentTarget;
+    //     console.log(enter);
+    //     console.log(enter.keyCode);
+    //     if (enter === 'enter') {
+    //         this.props.getBooks(document.getElementById("search-string").value)
+    //     }        
+    // }
+
+
 
   render(){
     return (
@@ -23,28 +36,29 @@ export default class Header extends React.Component{
                 <h1 className="header__title">Поиск книги</h1>
                 {/* <form className="header__form" action={url_get} method="get"> */}
                     <div className='className="header__form-search'>
-                        <input type="text" id="search-string" size="100" onKeyUp={this.startSearch}/>
+                        <input type="text" id="search-string" size="100"/>
+                        {/* <input type="text" id="search-string" size="100" onKeyUp={this.startSearch}/> */}
                         <button onClick={()=>(this.props.getBooks(document.getElementById("search-string").value))}>Поиск</button>
                     </div>
 
                     <div className='header__form-filter'>
                         <label className="header__form-label" htmlFor="header__form-category">Категория:</label>                
-                        <select id="header__form-category">
+                        <select id="header__form-category" onChange={this.changeSelectCategory}>
                             {/* список категорий */} 
-                            <option>all</option>
-                            <option>art</option>
-                            <option>biography</option>
-                            <option>computers</option>
-                            <option>history</option>
-                            <option>medical</option>
-                            <option>poetry</option>
+                            <option value='all'>all</option>
+                            <option value='art'>art</option>
+                            <option value='biography'>biography</option>
+                            <option value='computers'>computers</option>
+                            <option value='history'>history</option>
+                            <option value='medical'>medical</option>
+                            <option value='poetry'>poetry</option>
                         </select>
 
                         <label className="header__form-label" htmlFor="header__form-sort">Сортировка:</label>
-                        <select id="header__form-sort">
+                        <select id="header__form-sort" onChange={this.changeSelectOrder}>
                             {/* Список сортировки */}
-                            <option>relevance</option>
-                            <option>newest</option>
+                            <option value='relevance'>relevance</option>
+                            <option value='newest'>newest</option>
                         </select>
                     </div>
                 {/* </form> */}
