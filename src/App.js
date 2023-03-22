@@ -1,5 +1,6 @@
 import './App.css';
 import './modules/Book';
+// import { useDispatch, useSelector } from 'react-redux';
 
 import React, { useState } from 'react';
 import Header from './modules/Header';
@@ -19,6 +20,15 @@ function App() {
   const [order, setOrder] = useState('relevance'); //сортировка
   const [openBook, setOpenBook] = useState(null); //открытая книга
   const [textRequest, setTextRequest] = useState(''); //основной текст поиска
+
+
+  // const dispatch = useDispatch();
+  // const books = useSelector(state => state.cash);
+  // const items = useSelector(state => state.cash);
+  // const category = useSelector(state => state.cash);
+  // const order = useSelector(state => state.cash);
+  // const openBook = useSelector(state => state.cash);
+  // const textRequest = useSelector(state => state.cash);
 
   function getBooks(searchVal){
     if (searchVal === ''){
