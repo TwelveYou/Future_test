@@ -13,24 +13,29 @@ export default function ListOfBooks() {
   }
 
   function showListOgBooks(){
-    let list;
-
-    if(books === null){
-      list = <h3> Введите название книги </h3>;
+    try{
+      let list;
+      if(books === null || books === undefined){
+        list = <h3> Введите название книги </h3>;
+      }
+      else{
+        list = <div className="list"> {books.map((book, index)=>(
+          <Book 
+            key={'ID'+book.id+'-'+index}
+            title={book.volumeInfo.title  } 
+            category={book.volumeInfo.categories} 
+            authors={book.volumeInfo.authors} 
+            url={safeGetUrlImg(book)}
+            book={book}
+          />))} 
+        </div>;
+      }
+      return list;
     }
-    else{
-      list = <div className="list"> {books.map((book, index)=>(
-        <Book 
-          key={'ID'+book.id+'-'+index}
-          title={book.volumeInfo.title  } 
-          category={book.volumeInfo.categories} 
-          authors={book.volumeInfo.authors} 
-          url={safeGetUrlImg(book)}
-          book={book}
-        />))} 
-      </div>;
+    catch(err){
+        console.log('error in function "showListOgBooks()"');
+        console.log(err);
     }
-    return list;
   }
 
   return (

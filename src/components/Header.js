@@ -9,6 +9,7 @@ export default function Header() {
     const category = useSelector(state => state.category);
     const order = useSelector(state => state.order);
 
+    // Our input tag always in focus in mount app
     useEffect(() => {
         document.querySelector('input').focus();
     },[]);
@@ -16,7 +17,7 @@ export default function Header() {
     function handleInputKeyPress(e){
         var key=e.keyCode || e.which;
         if (key === 13){ // Клавиша Enter
-            getBooks(document.getElementById("search-string").value);
+            getBooks(textRequest);
         }
     }
 
@@ -32,34 +33,41 @@ export default function Header() {
         dispatch({type:'CHANGE_TEXT_REQUEST',payloader:event.target.value});
     }
 
-    function getBooks(){
-        if (textRequest === ''){
-            
-            document.getElementById('search-string').placeholder = 'Вы не ввели текст';
-            document.getElementById('search-string').style = 'color:red; border-color: red;';
+    function getSubject(){
+        if (category === 'all'){
+            return ''
+        } else {
+            return '+subject:' + category;
+        }
+    }
 
-            dispatch({type: 'CLEAR_BOOKS', payLoader : null});
-        } else{
-            document.getElementById('search-string').placeholder = '';
-            document.getElementById('search-string').style = '';
+    function messageWarningInSearchInput(message){
+        document.getElementById('search-string').placeholder = message;
+        document.getElementById('search-string').style = 'color:red; border-color: red;';
+        dispatch({type: 'CLEAR_BOOKS', payLoader : null});
+    }
 
-            if(document.getElementById('button-add__button') !== null){
+    function clearStyleInputAndAddingButton(){
+        document.getElementById('search-string').placeholder = '';
+        document.getElementById('search-string').style = '';
+
+        //it need clear style if this element have in DOM
+        if (document.getElementById('button-add__button') !== null){
             document.getElementById('button-add__button').textContent = "Загрузить еще 30 книг";
             document.getElementById('button-add__button').style.backgroundColor = '';
             document.getElementById('button-add__button').style.color = '';
             document.getElementById('button-add__button').disabled = '';
-            }
+        }
+    }
 
-
+    function getBooks(){
+        if (textRequest === ''){ // If haven't request text in input
+            messageWarningInSearchInput('Вы не ввели текст');
+        } else{
+            clearStyleInputAndAddingButton();
+            
+            let ajax_get_query = "https://www.googleapis.com/books/v1/volumes?q="+textRequest+getSubject()+"&maxResults=30&startIndex=0&orderBy="+order+"&key="+keyForApi;
             var request = new XMLHttpRequest();
-            let subject;
-            if (category === 'all'){
-            subject = ''
-            } else {
-            subject = '+subject:' + category;
-            }
-        
-            let ajax_get_query = "https://www.googleapis.com/books/v1/volumes?q="+textRequest+subject+"&maxResults=30&startIndex=0&orderBy="+order+"&key="+keyForApi;
             request.open('GET',ajax_get_query,true);
             request.addEventListener('readystatechange', function() 
             {
@@ -113,7 +121,6 @@ export default function Header() {
                                 <option value='newest'>newest</option>
                             </select>
                         </div>
-                        
                     </div>
             </div>
         </header>

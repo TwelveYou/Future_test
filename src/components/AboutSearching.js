@@ -6,15 +6,21 @@ export default function AboutSearching() {
     const books = useSelector(state => state.books);
 
     function getInfoAboutSearching(){
-        let pages = null;
-        if(books !== null){
-            pages = <div style={{marginBottom: 10}} className='info-about-searching'>
-                <p>
-                    Найденное количество книг по вашему запросу: {items}
-                </p>
-            </div>
+        try{
+            let pages = null;
+            if(books !== null){
+                pages = <div className='info-about-searching'>
+                    <p>
+                        Найденное количество книг по вашему запросу: {items}
+                    </p>
+                </div>
+            }
+            return pages;
         }
-        return pages;
+        catch(err){
+            console.log('error in function "getInfoAboutSearching()"');
+            console.log(err);
+        }
     }       
 
     return (

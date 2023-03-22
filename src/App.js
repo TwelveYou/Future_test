@@ -13,7 +13,6 @@ import Loader from './components/Loader';
 export default function App() {
   const books = useSelector(state => state.books);
   const items = useSelector(state => state.items);
-  const category = useSelector(state => state.category);
   const openBook = useSelector(state => state.openBook);
 
   function showButtonAdd(){
@@ -41,7 +40,7 @@ export default function App() {
   return (
     <div className="App">
       <Loader/>
-      <Header category={category}></Header>
+      <Header></Header>
       {showContent()}
     </div>
   );

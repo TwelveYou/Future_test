@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 export default function ShowFullBook() {
     const dispatch = useDispatch();
-    const book = useSelector(state => state.openBook);
+    const fullBook = useSelector(state => state.openBook);
 
 
     function getSafeUrlImg(book){
@@ -22,12 +22,12 @@ export default function ShowFullBook() {
 
     function getOneBook(){
         let content;
-        if(book !== null){
-            let title = book.volumeInfo.title;
-            let category = book.volumeInfo.categories;
-            let authors = book.volumeInfo.authors;
-            let description = book.volumeInfo.description;
-            let url=getSafeUrlImg(book);
+        if(fullBook !== null || fullBook !== undefined){
+            let title = fullBook.volumeInfo.title;
+            let category = fullBook.volumeInfo.categories;
+            let authors = fullBook.volumeInfo.authors;
+            let description = fullBook.volumeInfo.description;
+            let url=getSafeUrlImg(fullBook);
 
             content = 
                 <div className="one-book">
