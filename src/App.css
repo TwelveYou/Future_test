@@ -96,6 +96,9 @@ header{
 
 .one-book__cover{
   border: black 1px solid;
+
+  min-height: 200px;
+  max-width: 150px;
 }
 
 .one-book__info-label{
