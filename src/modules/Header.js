@@ -1,13 +1,15 @@
 import React, { useEffect }  from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function Header(props) {
+    const dispatch = useDispatch();
+    const textRequest = useSelector(state => state.textRequest);
 
     useEffect(() => {
         document.querySelector('input').focus();
     });
     // Нужно сделать активацию только при первом монтировании.
     
-
     function handleInputKeyPress(e){
         var key=e.keyCode || e.which;
         if (key === 13){ // Клавиша Enter
@@ -16,15 +18,19 @@ export default function Header(props) {
     }
 
     function handlerChangeSelectOrder(event) {
-        props.setOrder(event.target.value);
+        dispatch({type:'SET_ORDER',payloader:event.target.value});
+        // props.setOrder(event.target.value);
     }
 
     function handlerChangeSelectCategory(event) {
-        props.setCategory(event.target.value);
+        dispatch({type:'SET_CATEGORY',payloader:event.target.value});
+        // props.setCategory(event.target.value);
     }
 
     function handlerChangeTextRequest(event){
-        props.setTextRequest(event.target.value);
+        dispatch({type:'CHANGE_TEXT_REQUEST',payloader:event.target.value});
+        console.log(textRequest);
+        // props.setTextRequest(event.target.value);
     }
 
     return (
@@ -32,7 +38,7 @@ export default function Header(props) {
             <div className="header__content_center">
                 <h1 className="header__title">Поиск книги</h1>
                     <div className='className="header__form-search'>
-                        <input type="text" id="search-string" size="100" value={props.textRequest} onChange={handlerChangeTextRequest} onKeyPress={handleInputKeyPress}/>
+                        <input type="text" id="search-string" size="100" value={textRequest} onChange={handlerChangeTextRequest} onKeyPress={handleInputKeyPress}/>
                         <button onClick={()=>(props.getBooks(document.getElementById("search-string").value))}>Поиск</button>
                     </div>
                     <div className='header__form-filter'>

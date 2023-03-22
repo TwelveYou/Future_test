@@ -1,8 +1,9 @@
 import './App.css';
 import './modules/Book';
-// import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import React, { useState } from 'react';
+import React from 'react';
+// import React, { useState } from 'react';
 import Header from './modules/Header';
 import ListOfBooks from './modules/ListOfBooks';
 import AboutSearching from './modules/AboutSearching';
@@ -14,30 +15,29 @@ import keyForApi from './modules/data/keyForApi';
 
 
 function App() {
-  const [books, setBooks] = useState(null); //книги
-  const [items, setItems] = useState(0); //количество найденных книг
-  const [category, setCategory] = useState('all'); //фильтр - категория
-  const [order, setOrder] = useState('relevance'); //сортировка
-  const [openBook, setOpenBook] = useState(null); //открытая книга
-  const [textRequest, setTextRequest] = useState(''); //основной текст поиска
+  // const [books, setBooks] = useState(null); //книги
+  // const [items, setItems] = useState(0); //количество найденных книг
+  // const [category, setCategory] = useState('all'); //фильтр - категория
+  // const [order, setOrder] = useState('relevance'); //сортировка
+  // const [openBook, setOpenBook] = useState(null); //открытая книга
+  // const [textRequest, setTextRequest] = useState(''); //основной текст поиска
 
 
-  // const dispatch = useDispatch();
-  // const books = useSelector(state => state.cash);
-  // const items = useSelector(state => state.cash);
-  // const category = useSelector(state => state.cash);
-  // const order = useSelector(state => state.cash);
-  // const openBook = useSelector(state => state.cash);
-  // const textRequest = useSelector(state => state.cash);
+  const dispatch = useDispatch();
+  const books = useSelector(state => state.books);
+  const items = useSelector(state => state.items);
+  const category = useSelector(state => state.category);
+  const order = useSelector(state => state.order);
+  const openBook = useSelector(state => state.openBook);
+  const textRequest = useSelector(state => state.textRequest);
 
-  function getBooks(searchVal){
-    if (searchVal === ''){
-      searchVal = 'flowers';
-
+  function getBooks(){
+    if (textRequest === ''){
+      
       document.getElementById('search-string').placeholder = 'Вы не ввели текст';
       document.getElementById('search-string').style = 'color:red; border-color: red;';
 
-      setBooks(null);
+      dispatch({type: 'CLEAR_BOOKS', payLoader : null});
     } else{
       document.getElementById('search-string').placeholder = '';
       document.getElementById('search-string').style = '';
@@ -58,16 +58,20 @@ function App() {
         subject = '+subject:' + category;
       }
   
-      let ajax_get_query = "https://www.googleapis.com/books/v1/volumes?q="+searchVal+subject+"&maxResults=30&startIndex=0&orderBy="+order+"&key="+keyForApi;
+      let ajax_get_query = "https://www.googleapis.com/books/v1/volumes?q="+textRequest+subject+"&maxResults=30&startIndex=0&orderBy="+order+"&key="+keyForApi;
+      console.log(ajax_get_query);
       request.open('GET',ajax_get_query,true);
       request.addEventListener('readystatechange', function() 
       {
           if ((request.readyState === 4) && (request.status === 200)) 
           {
               let response = JSON.parse(request.responseText);
-              setItems(response.totalItems);
-              setOpenBook(null);
-              return  setBooks(response.items);
+              dispatch({type: 'SET_ITEMS', payloader: response.totalItems});
+              // setItems(response.totalItems);
+              dispatch({type: 'CLEAR_FULL_BOOK', payloader: null});
+              // setOpenBook(null);
+              return  dispatch({type: 'GET__BOOKS',payloader: response.items});
+              // return setBooks(response.items);
           }
       });
 
@@ -101,7 +105,8 @@ function App() {
           {
               let response = JSON.parse(request.responseText);
               if(response.hasOwnProperty('items')){
-                return  setBooks([...books, ...response.items]);
+                return dispatch({type: 'ADD_BOOKS', payloader: response.items})
+                // return  setBooks([...books, ...response.items]);
               } else
               if(response.items === undefined){
                 document.getElementById('button-add__button').textContent = "Больше нет книг по вашему запросу";
@@ -134,11 +139,11 @@ function App() {
 
   let content;
   if(openBook !== null){
-    content = <ShowFullBook book={openBook} openBook={openBook} setOpenBook={setOpenBook}/>;
+    content = <ShowFullBook book={openBook} openBook={openBook}/>;
   } else{
     content = <div>
       <AboutSearching items={items} books={books}/>
-      <ListOfBooks books={books} setOpenBook={setOpenBook}></ListOfBooks>
+      <ListOfBooks books={books}></ListOfBooks>
       {buttonAdd}
     </div>;
   }
@@ -147,7 +152,7 @@ function App() {
   return (
     <div className="App">
       <Loader/>
-      <Header textRequest={textRequest} setTextRequest={setTextRequest} getBooks={getBooks} setCategory={setCategory} setOrder={setOrder} category={category}></Header>
+      <Header getBooks={getBooks} category={category}></Header>
       {content}
     </div>
   );

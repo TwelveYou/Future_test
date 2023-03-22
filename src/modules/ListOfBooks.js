@@ -24,7 +24,7 @@ export default function ListOfBooks(props) {
           category={book.volumeInfo.categories} 
           authors={book.volumeInfo.authors} 
           url={safeGetUrlImg(book)}
-          setOpenBook={props.setOpenBook}
+          // setOpenBook={props.setOpenBook}
           book={book}
         />))} 
       </div>;
