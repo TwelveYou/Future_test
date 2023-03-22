@@ -1,9 +1,9 @@
 import React, { useEffect }  from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 
-import keyForApi from '../modules/data/keyForApi';
+import keyForApi from '../data/keyForApi';
 
-export default function Header(props) {
+export default function Header() {
     const dispatch = useDispatch();
     const textRequest = useSelector(state => state.textRequest);
     const category = useSelector(state => state.category);

@@ -1,7 +1,9 @@
 import React from 'react'
 import Book from './Book';
+import { useSelector } from 'react-redux';
 
-export default function ListOfBooks(props) {
+export default function ListOfBooks() {
+  const books = useSelector(state => state.books);
 
   function safeGetUrlImg(book){
     if(book.volumeInfo.hasOwnProperty('imageLinks')){
@@ -13,18 +15,17 @@ export default function ListOfBooks(props) {
   function showListOgBooks(){
     let list;
 
-    if(props.books === null){
+    if(books === null){
       list = <h3> Введите название книги </h3>;
     }
     else{
-      list = <div className="list"> {props.books.map((book, index)=>(
+      list = <div className="list"> {books.map((book, index)=>(
         <Book 
           key={'ID'+book.id+'-'+index}
           title={book.volumeInfo.title  } 
           category={book.volumeInfo.categories} 
           authors={book.volumeInfo.authors} 
           url={safeGetUrlImg(book)}
-          // setOpenBook={props.setOpenBook}
           book={book}
         />))} 
       </div>;
