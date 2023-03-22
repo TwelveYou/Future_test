@@ -13,6 +13,11 @@ header{
   margin: 0 auto;
 }
 
+#search-string{
+ width: 60%;
+ border: 1px solid green;
+}
+
 .info-about-searching{
   text-align: center
 }
@@ -72,12 +77,6 @@ header{
   text-overflow: ellipsis;
   max-height: 42px;
 }
-
-/* .button-add{
-  /* display: flex; */
-  /* margin: auto; */
-  
-/* } */
 
 .button-add > button{
   margin: 0 auto;

@@ -38,10 +38,8 @@ constructor(props) {
                     <p className="one-book__info-full-title">{title}</p>
                     <p className="one-book__info-label">Категории:</p>
                     <p className="one-book__info-full-category">{this.getSafeArray(category)}</p>
-                    {/* <p className="one-book__info-full-category">{category.join(', ')}</p> */}
                     <p className="one-book__info-label">Авторы:</p>
                     <p className="one-book__info-full-authors">{this.getSafeArray(authors)}</p>
-                    {/* <p className="one-book__info-full-authors">{authors.join(', ')}</p> */}
                     <p className="one-book__info-label">Описание:</p>
                     <p className="one-book__info-full-description">{description}</p>
                 </div>

@@ -13,12 +13,12 @@ import keyForApi from './modules/data/keyForApi';
 
 
 function App() {
-  const [books, setBooks] = useState(null);
-  const [items, setItems] = useState(0);
-  const [category, setCategory] = useState('all');
-  const [order, setOrder] = useState('relevance');
-  const [openBook, setOpenBook] = useState(null);
-  const [textRequest, setTextRequest] = useState('');
+  const [books, setBooks] = useState(null); //книги
+  const [items, setItems] = useState(0); //количество найденных книг
+  const [category, setCategory] = useState('all'); //фильтр - категория
+  const [order, setOrder] = useState('relevance'); //сортировка
+  const [openBook, setOpenBook] = useState(null); //открытая книга
+  const [textRequest, setTextRequest] = useState(''); //основной текст поиска
 
   function getBooks(searchVal){
     if (searchVal === ''){
@@ -82,7 +82,6 @@ function App() {
     }
 
     if(books !== null){
-      // console.log(books.length);
       var request = new XMLHttpRequest();
       let ajax_get_query = "https://www.googleapis.com/books/v1/volumes?q="+searchVal+subject+"&maxResults=30&startIndex="+books.length+"&orderBy="+order+"&key="+keyForApi;
       request.open('GET',ajax_get_query,true);

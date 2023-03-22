@@ -1,21 +1,32 @@
-import React from 'react';
+import React from 'react'
 
-export default class Book extends React.Component{
-  render(){
-    let authors = this.props.authors;
+export default function Book(props) {
+    
+  function safeGetAuthors(){
+    let authors = props.authors;
     if (typeof authors === "object"){
-      this.props.authors.join(', ')
+      authors = authors.join(', ')
     }
-
-    return (
-      <div className="book" onClick={()=>(this.props.setOpenBook(this.props.book))}>
-        <img className="book__cover" src={this.props.url} alt={'Обложка отсутствует'} title={this.props.title} />
-        <div className="book__info">
-          <h3 className="book__info-title">{this.props.title}</h3>
-          <p className="book__info-category">{this.props.category}</p>
-          <p className="book__info-authors">{ authors }</p>
-        </div>
-      </div>
-    );
+    return authors;
   }
+
+  function safeGetCategory(){
+    let category = props.category;
+    if (typeof category === "object"){
+      category = category[0]
+    }
+    return category;
+  }
+
+
+  return (
+    <div className="book" onClick={()=>(props.setOpenBook(props.book))}>
+      <img className="book__cover" src={props.url} alt={'Обложка отсутствует'} title={props.title} />
+      <div className="book__info">
+        <h3 className="book__info-title">{props.title}</h3>
+        <p className="book__info-category">{safeGetCategory()}</p>
+        <p className="book__info-authors">{ safeGetAuthors() }</p>
+      </div>
+    </div>
+  )
 }
