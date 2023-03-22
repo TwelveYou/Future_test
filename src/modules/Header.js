@@ -5,6 +5,7 @@ export default function Header(props) {
     useEffect(() => {
         document.querySelector('input').focus();
     });
+    // Нужно сделать активацию только при первом монтировании.
     
 
     function handleInputKeyPress(e){

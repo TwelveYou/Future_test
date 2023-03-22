@@ -38,31 +38,3 @@ export default function ListOfBooks(props) {
     </div>
   )
 }
-
-
-// import React from 'react';
-// import Book from './Book';
-
-// export default class ListOfBooks extends React.Component{
-//   constructor(props) {
-//     super(props);
-//     this.getSafeUrlImg = this.getSafeUrlImg.bind(this);
-//   }
-
-//   getSafeUrlImg(book){
-//     if(book.volumeInfo.hasOwnProperty('imageLinks')){
-//       return book.volumeInfo.imageLinks.thumbnail;
-//     } else 
-//       return '';
-//   }
-      
-//   render(){
-
-
-//     return (
-//         <div className="list">
-//           {list}
-//         </div>
-//     );
-//   }
-// }
