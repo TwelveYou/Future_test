@@ -2,7 +2,7 @@ import './App.css';
 import './modules/Book';
 import { useDispatch, useSelector } from 'react-redux';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 // import React, { useState } from 'react';
 import Header from './modules/Header';
 import ListOfBooks from './modules/ListOfBooks';
@@ -31,61 +31,20 @@ function App() {
   const openBook = useSelector(state => state.openBook);
   const textRequest = useSelector(state => state.textRequest);
 
-  function getBooks(){
-    if (textRequest === ''){
-      
-      document.getElementById('search-string').placeholder = 'Вы не ввели текст';
-      document.getElementById('search-string').style = 'color:red; border-color: red;';
-
-      dispatch({type: 'CLEAR_BOOKS', payLoader : null});
-    } else{
-      document.getElementById('search-string').placeholder = '';
-      document.getElementById('search-string').style = '';
-
-      if(document.getElementById('button-add__button') !== null){
-        document.getElementById('button-add__button').textContent = "Загрузить еще 30 книг";
-        document.getElementById('button-add__button').style.backgroundColor = '';
-        document.getElementById('button-add__button').style.color = '';
-        document.getElementById('button-add__button').disabled = '';
-      }
-
-
-      var request = new XMLHttpRequest();
-      let subject;
-      if (category === 'all'){
-        subject = ''
-      } else {
-        subject = '+subject:' + category;
-      }
-  
-      let ajax_get_query = "https://www.googleapis.com/books/v1/volumes?q="+textRequest+subject+"&maxResults=30&startIndex=0&orderBy="+order+"&key="+keyForApi;
-      console.log(ajax_get_query);
-      request.open('GET',ajax_get_query,true);
-      request.addEventListener('readystatechange', function() 
-      {
-          if ((request.readyState === 4) && (request.status === 200)) 
-          {
-              let response = JSON.parse(request.responseText);
-              dispatch({type: 'SET_ITEMS', payloader: response.totalItems});
-              // setItems(response.totalItems);
-              dispatch({type: 'CLEAR_FULL_BOOK', payloader: null});
-              // setOpenBook(null);
-              return  dispatch({type: 'GET__BOOKS',payloader: response.items});
-              // return setBooks(response.items);
-          }
-      });
-
-      request.onloadstart = () => { 
-        document.getElementById('loader').style.visibility = 'visible';
-      }
-
-      request.onload = () => { 
-        document.getElementById('loader').style.visibility = 'hidden';
-      };
-        
-      request.send();  
-    }
+useEffect(() => {
+  return () => {
+    console.log(books);
+    console.log(items);
+    console.log(category); //+
+    console.log(order); //+
+    console.log(openBook);
+    console.log(textRequest); //+
+    console.log('______________________');
   }
+})
+
+
+
 
   function addBooks(searchVal){
     let subject;
@@ -152,7 +111,7 @@ function App() {
   return (
     <div className="App">
       <Loader/>
-      <Header getBooks={getBooks} category={category}></Header>
+      <Header category={category}></Header>
       {content}
     </div>
   );
