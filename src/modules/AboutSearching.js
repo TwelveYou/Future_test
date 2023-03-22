@@ -1,19 +1,36 @@
-import React from 'react';
+import React from 'react'
 
-export default class ListOfBooks extends React.Component{
-    render(){
+export default function AboutSearching(props) {
+
+    function getInfoAboutSearching(){
         let pages = null;
-        if(this.props.books !== null){
+        if(props.books !== null){
             pages = <div style={{marginBottom: 10}} className='info-about-searching'>
                 <p>
-                    Найденное количество книг по вашему запросу: {this.props.items}
+                    Найденное количество книг по вашему запросу: {props.items}
                 </p>
             </div>
         }
-        return(
-            <div>
-                {pages}
-            </div>
-        );
-    }
+        return pages;
+    }       
+
+    return (
+        <div>
+            {getInfoAboutSearching()}
+        </div>
+    )
 }
+
+
+// import React from 'react';
+
+// export default class ListOfBooks extends React.Component{
+//     render(){
+
+//         return(
+//             <div>
+//                 {pages}
+//             </div>
+//         );
+//     }
+// }
