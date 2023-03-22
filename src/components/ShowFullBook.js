@@ -53,7 +53,10 @@ export default function ShowFullBook() {
 
   return (
     <div className="show-one-book">
-        <button className='show-one-book__button-close' onClick={()=>(dispatch({type: 'CLEAR_FULL_BOOK', preloader: null}))}>Назад</button>
+        <button 
+            className='show-one-book__button-close' 
+            onClick={()=>(dispatch({type: 'CLEAR_FULL_BOOK', preloader: null}))}
+        >Назад</button>
         {getOneBook()}
     </div>
   )

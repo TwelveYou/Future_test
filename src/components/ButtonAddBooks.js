@@ -59,7 +59,6 @@ export default function ButtonAddBooks() {
       <button 
         id="button-add__button" 
         onClick={()=>(addBooks())}
-        // onClick={()=>(props.addBooks(document.getElementById("search-string").value))}
       >
         Загрузить еще 30 книг
       </button>        
