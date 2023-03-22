@@ -8,15 +8,3 @@ export default function Loader() {
     </div>
   )
 }
-
-
-// import React, { Component } from 'react';
-// import logo from '../logo.svg';
-
-// export default class Loader extends Component {
-//   render() {
-//     return (
-
-//     )
-//   }
-// }
