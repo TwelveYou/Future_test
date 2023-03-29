@@ -6,10 +6,16 @@ export default function ListOfBooks() {
   const books = useSelector(state => state.books);
 
   function safeGetUrlImg(book){
-    if(book.volumeInfo.hasOwnProperty('imageLinks')){
-      return book.volumeInfo.imageLinks.thumbnail;
-    } else 
-      return '';
+    try{
+      if(book.volumeInfo.hasOwnProperty('imageLinks')){
+        return book.volumeInfo.imageLinks.thumbnail;
+      } else 
+        return '';
+    }
+    catch(err){
+        console.log('error in function "safeGetUrlImg()"');
+        console.log(err);
+    }
   }
 
   function showListOgBooks(){
